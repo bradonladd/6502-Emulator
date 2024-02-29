@@ -1,0 +1,8 @@
+lda #$11
+sta $0011
+lda #$22
+sta $0012
+
+lda #$33
+clc
+adc $0011
