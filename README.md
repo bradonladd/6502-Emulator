@@ -22,18 +22,5 @@ We're going to implement three main classes: the processor class, memory class, 
 - The processor class will store points of state, such as registers, status flags, program counter, etc. It will also hold the functions necessary.
 
 Program flow will go as such. The main function will create a parser and a memory class. The parser will store the program's instructions into an array (or vector) within memory and then spin itself down. Next, we initialize the processor. The main function is going to call the execute class method for Processor to start the program execution:
-    while (program counter is not at end of instructions) {
-        switch:
-            case "add":
-                call processor.add([parameters]);
-                validate state
-                break;
-            case "sub":
-                call processor.sub([parameters]);
-                validate state
-                break;
-            case...:
-            case...:
-        break;
-    }
+ ![flow](image.png)
 
