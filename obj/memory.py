@@ -13,7 +13,11 @@ class InstructionMemory():
         print("##############################")
 
     def fetch(self, programCounter):
-        return self.OPCODES[programCounter], self.VALUES[programCounter]
+        if programCounter == len(self.OPCODES):
+            return -1
+        else:
+            return self.OPCODES[programCounter], self.VALUES[programCounter]
+
 
 
 class DataMemory():
@@ -29,6 +33,9 @@ class DataMemory():
 
     def fetch(self, programCounter):
         return self.VALUES[programCounter]
+    
+    def write(self, programCounter, val):
+        self.VALUES[programCounter] = val
 
     
 
