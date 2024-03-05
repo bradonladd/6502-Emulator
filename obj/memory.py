@@ -1,6 +1,6 @@
-class Memory():
-    #OPCODES = []
-    #VALUES = []
+class InstructionMemory():
+    OPCODES = []
+    VALUES = []
     
     def __init__(self, op, val):
         self.OPCODES = op
@@ -12,9 +12,23 @@ class Memory():
             print("0x" + str(i) + ": " + self.OPCODES[i] + " " + self.VALUES[i])
         print("##############################")
 
-    def getInstruction(programCounter):
-        return OPCODES[programCounter], VALUES[programCounter]
+    def fetch(self, programCounter):
+        return self.OPCODES[programCounter], self.VALUES[programCounter]
 
+
+class DataMemory():
+    VALUES = []
+
+    def __init__(self, val):
+        self.VALUES = val
+    
+    def printMem(self):
+        print("Data Memory")
+        for i in range(0, len(self.VALUES)):
+            print("0x" + str(i) + ": " + self.VALUES[i])
+
+    def fetch(self, programCounter):
+        return self.VALUES[programCounter]
 
     
 
