@@ -5,6 +5,8 @@ class Processor:
     instructionMemory = None
     dataMemory = None
     programCounter = 0
+    accumulator = 0
+    statusFlag = 0
 
     def __init__(self, instrMem, dataMem):
         self.instructionMemory = instrMem
