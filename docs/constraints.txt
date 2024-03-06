@@ -1,0 +1,1 @@
+1) We are using an 8 bit addressing system rather than a 16 bit addressing system. Any store instructions need to only use 8 bits.

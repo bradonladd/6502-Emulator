@@ -12,6 +12,10 @@ class InstructionMemory():
             print("0x" + str(i) + ": " + self.OPCODES[i] + " " + self.VALUES[i])
         print("##############################")
 
+    def convertMemoryFromStringToHex(self):
+        for i in range(0, len(self.VALUES)):
+            self.VALUES[i] = self.VALUES[i]
+
     def fetch(self, programCounter):
         if programCounter == len(self.OPCODES):
             return -1
@@ -21,10 +25,12 @@ class InstructionMemory():
 
 
 class DataMemory():
+    memSize = 255
     VALUES = []
 
     def __init__(self, val):
-        self.VALUES = val
+        for i in range (0, self.memSize):
+            self.VALUES.append(hex(0))
     
     def printMem(self):
         print("Data Memory")
