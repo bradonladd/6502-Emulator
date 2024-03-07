@@ -15,7 +15,15 @@ class Processor:
     accumulator = ""
     regX = 0
     regY = 0
-    statusFlag = ""
+    statusFlags = {
+        "N": 0,
+        "V": 0,
+        "B": 0,
+        "D": 0,
+        "I": 0,
+        "Z": 0,
+        "C": 0
+    }
 
     def __init__(self, instrMem, dataMem):
         self.instructionMemory = instrMem
@@ -31,9 +39,11 @@ class Processor:
             elif (opcode == "LDA"):
                 self.LDA(value, flag)
                 self.readAccumulator()
+                self.readStatusFlags()
             elif (opcode == "LDX"):
                 self.LDX(value, flag)
                 self.readRegX()
+                self.readStatusFlags()
             elif (opcode == "LDY"):
                 self.LDY(value, flag)
                 self.readRegY()
@@ -49,22 +59,31 @@ class Processor:
             self.programCounter = self.programCounter + 1
 
     def LDA(self, val, flag):
-        if (flag == "literal"):
-            self.accumulator = val
-        else:
-            self.accumulator = self.dataMemory.fetch(val)
+        if (flag == "literal"): self.accumulator = val
+        else: self.accumulator = self.dataMemory.fetch(val)
+
+        if (int(self.accumulator, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        self.statusFlags["N"] = (bin(int(self.accumulator[2], 16))[2])
     
     def LDX(self, val, flag):
-        if (flag == "literal"):
-            self.regX = val
-        else:
-            self.regX = self.dataMemory.fetch(val)
+        if (flag == "literal"): self.regX = val
+        else: self.regX = self.dataMemory.fetch(val)
+        
+        if (int(self.regX, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        self.statusFlags["N"] = (bin(int(self.regX[2], 16))[2])
 
     def LDY(self, val, flag):
-        if (flag == "literal"):
-            self.regX = val
-        else:
-            self.regX = self.dataMemory.fetch(val)
+        if (flag == "literal"): self.regX = val
+        else: self.regX = self.dataMemory.fetch(val)
+
+        if (int(self.regY, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        self.statusFlags["N"] = (bin(int(self.regY[2], 16))[2])
 
     def STA(self, val):
         self.dataMemory.store(val, self.accumulator)
@@ -75,11 +94,24 @@ class Processor:
     def STY(self, val):
         self.dataMemory.store(val, self.regY)
 
+    def TAX(self):
+        self.regX = self.accumulator
+
+        if (int(self.regX, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        self.statusFlags["N"] = (bin(int(self.regX[2], 16))[2])
+
+    def TAY(self):
+        self.regY = self.accumulator
+
+        if (int(self.regY, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        self.statusFlags["N"] = (bin(int(self.regY[2], 16))[2])
+
+
         
-
-
-
-
 
     def readAccumulator(self):
         print("Accumulator: " + self.accumulator)
@@ -89,3 +121,6 @@ class Processor:
 
     def readRegY(self):
         print("Register Y: " + self.regY)
+
+    def readStatusFlags(self):
+        print(self.statusFlags)
