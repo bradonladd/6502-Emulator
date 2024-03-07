@@ -65,8 +65,9 @@ class Processor:
         if (int(self.accumulator, 16) == 0): self.statusFlags["Z"] = 1
         else: self.statusFlags["Z"] = 0
 
-        self.statusFlags["N"] = (bin(int(self.accumulator[2], 16))[2])
-    
+        if ((int(self.accumulator, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
+
     def LDX(self, val, flag):
         if (flag == "literal"): self.regX = val
         else: self.regX = self.dataMemory.fetch(val)
@@ -74,7 +75,8 @@ class Processor:
         if (int(self.regX, 16) == 0): self.statusFlags["Z"] = 1
         else: self.statusFlags["Z"] = 0
 
-        self.statusFlags["N"] = (bin(int(self.regX[2], 16))[2])
+        if ((int(self.regX, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
 
     def LDY(self, val, flag):
         if (flag == "literal"): self.regX = val
@@ -83,7 +85,8 @@ class Processor:
         if (int(self.regY, 16) == 0): self.statusFlags["Z"] = 1
         else: self.statusFlags["Z"] = 0
 
-        self.statusFlags["N"] = (bin(int(self.regY[2], 16))[2])
+        if ((int(self.regY, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
 
     def STA(self, val):
         self.dataMemory.store(val, self.accumulator)
@@ -100,7 +103,8 @@ class Processor:
         if (int(self.regX, 16) == 0): self.statusFlags["Z"] = 1
         else: self.statusFlags["Z"] = 0
 
-        self.statusFlags["N"] = (bin(int(self.regX[2], 16))[2])
+        if ((int(self.regX, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
 
     def TAY(self):
         self.regY = self.accumulator
@@ -108,7 +112,50 @@ class Processor:
         if (int(self.regY, 16) == 0): self.statusFlags["Z"] = 1
         else: self.statusFlags["Z"] = 0
 
-        self.statusFlags["N"] = (bin(int(self.regY[2], 16))[2])
+        if ((int(self.regY, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
+
+    def TXA(self):
+        self.accumlator = self.regX
+
+        if (int(self.accumulator, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        if ((int(self.accumulator, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
+
+    def TYA(self):
+        self.accumulator = self.regY
+
+        if (int(self.accumulator, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        if ((int(self.accumulator, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
+
+    def INX(self):
+        self.regX = hex(int(self.regX, 16) + 1)
+
+        if (int(self.regX, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        if ((int(self.regX, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
+
+    def INY(self):
+        self.regY = hex(int(self.regY, 16) + 1)
+
+        if (int(self.regY, 16) == 0): self.statusFlags["Z"] = 1
+        else: self.statusFlags["Z"] = 0
+
+        if ((int(self.regY, 16)) >= 128): self.statusFlags["N"] = 1
+        else: self.statusFlags["N"] = 0
+
+    def ADC(self):
+        # Accumulator plus value plus carry = new accumulator value
+        
+
+
 
 
         
