@@ -24,38 +24,68 @@ class Processor:
 
     def execute(self):
         while (1 == 1):
-            opcode, value = self.instructionMemory.fetch(self.programCounter)
+            opcode, value, flag = self.instructionMemory.fetch(self.programCounter)
 
             if (opcode == "END"):
                 break
             elif (opcode == "LDA"):
-                self.LDA(value)
+                self.LDA(value, flag)
                 self.readAccumulator()
             elif (opcode == "LDX"):
-                self.LDX(value)
+                self.LDX(value, flag)
                 self.readRegX()
             elif (opcode == "LDY"):
-                self.LDY(value)
+                self.LDY(value, flag)
                 self.readRegY()
+            elif (opcode == "STA"):
+                self.STA(value)
+                self.dataMemory.printMem()
+            elif (opcode == "STX"):
+                self.STX(value)
+            elif (opcode == "STY"):
+                self.STY(value)
+                    
 
             self.programCounter = self.programCounter + 1
 
-    def LDA(self, val):
-        self.accumulator = val
+    def LDA(self, val, flag):
+        if (flag == "literal"):
+            self.accumulator = val
+        else:
+            self.accumulator = self.dataMemory.fetch(val)
     
-    def LDX(self, val):
-        self.regX = val
+    def LDX(self, val, flag):
+        if (flag == "literal"):
+            self.regX = val
+        else:
+            self.regX = self.dataMemory.fetch(val)
 
-    def LDY(self, val):
-        self.regY = val
+    def LDY(self, val, flag):
+        if (flag == "literal"):
+            self.regX = val
+        else:
+            self.regX = self.dataMemory.fetch(val)
+
+    def STA(self, val):
+        self.dataMemory.store(val, self.accumulator)
+
+    def STX(self, val):
+        self.dataMemory.store(val, self.regX)
+
+    def STY(self, val):
+        self.dataMemory.store(val, self.regY)
+
+        
+
+
 
 
 
     def readAccumulator(self):
-        print(self.accumulator)
+        print("Accumulator: " + self.accumulator)
 
     def readRegX(self):
-        print(self.regX)
+        print("Register X: "  + self.regX)
 
     def readRegY(self):
-        print(self.regY)
+        print("Register Y: " + self.regY)

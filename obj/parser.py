@@ -41,11 +41,13 @@
 class Parser:
     OPCODES = []
     VALUES = []
+    FLAGS = []
     file = ""
 
     def __init__(self, f):
         self.file = f
 
+    # Returns list of (string) OPCODES, (hex) VALUES, (string) FLAGS
     def parse(self):
         file = open(self.file, "r")
 
@@ -54,9 +56,20 @@ class Parser:
         for line in lines:
             commands = line.split()
             self.OPCODES.append(commands[0])
+            
+
+            found = False
+            for char in commands[1]:
+                if (char == "#"):
+                    self.FLAGS.append("literal")
+                    found = True
+                    break
+            if (found == False):
+                self.FLAGS.append("address")
+            
             commands[1] = commands[1].replace("#", "")
             commands[1] = commands[1].replace("$", "")
             self.VALUES.append(hex(int(commands[1], 16)))
         
-        return self.OPCODES, self.VALUES
+        return self.OPCODES, self.VALUES, self.FLAGS
             

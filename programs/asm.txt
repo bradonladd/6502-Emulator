@@ -1,4 +1,4 @@
-LDA #$01
-LDA #$c4
 LDA #$ff
+STA $03
+LDA $03
 END #$00
