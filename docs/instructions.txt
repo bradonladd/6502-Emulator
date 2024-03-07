@@ -1,0 +1,7 @@
+LDA - Load Accumulator
+LDX - Load X Reg
+LDY - Load Y Reg
+
+STA - Store Accumulator
+STX - Store X Reg
+STY - Store Y Reg
